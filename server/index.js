@@ -6,6 +6,10 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import postRoutes from './routes/posts.js';
 import userRoutes from './routes/users.js';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 
 if (process.env.NODE_ENV !== "production") {
@@ -13,7 +17,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
@@ -43,6 +47,10 @@ app.use('/users', userRoutes);
 
 
 const port = process.env.PORT || 4001;
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+});
 
 app.listen(port, () => {
     console.log(`Welcome to server : ${port}`);
