@@ -28,6 +28,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "publishToHeroku": "cd ../ && git subtree push --prefix frontend heroku-app-frontend <name_of_branch>|| true",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "react-scripts start",
     "build": "react-scripts build",
