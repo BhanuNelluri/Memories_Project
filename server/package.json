@@ -5,7 +5,6 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "publishToHeroku": "cd ../ && git subtree push --prefix server heroku-Memories_project-server master || true",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
