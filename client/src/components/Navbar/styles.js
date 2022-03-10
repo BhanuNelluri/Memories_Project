@@ -12,6 +12,7 @@ export default makeStyles((theme) => ({
         padding: '10px 50px',
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
+            padding:'10px 0px'
         },
     },
     heading: {
@@ -27,9 +28,20 @@ export default makeStyles((theme) => ({
     toolbar: {
         display: 'flex',
         justifyContent: 'flex-end',
-        width: '400px',
         [theme.breakpoints.down('sm')]: {
-            width: 'auto',
+            width:'auto',
+            display:'flex',
+            alignItems: 'space-between',
+        },
+        [theme.breakpoints.down('xs')]: {
+            width:'auto',
+            display:'flex',
+            alignItems: 'space-between',
+        },
+        [theme.breakpoints.down('md')]: {
+            width:'auto',
+            display:'flex',
+            alignItems: 'space-between',
         },
     },
     profile: {
@@ -39,17 +51,22 @@ export default makeStyles((theme) => ({
         alignItems: 'center',
         [theme.breakpoints.down('sm')]: {
             width: 'auto',
-            marginTop: 20,
-            justifyContent: 'center',
+            marginTop: '30px',
         },
     },
     logout: {
         marginLeft: '20px',
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '20px',
+        },
     },
     userName: {
         display: 'flex',
         alignItems: 'center',
         textAlign: 'center',
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '20px',
+        },
     },
     brandContainer: {
         display: 'flex',
@@ -58,5 +75,8 @@ export default makeStyles((theme) => ({
     purple: {
         color: theme.palette.getContrastText(deepPurple[500]),
         backgroundColor: deepPurple[500],
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '20px',
+        },
     },
 }));

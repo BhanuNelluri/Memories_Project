@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import posts from './posts';
+import tasks from './tasks';
 import Auth from './Auth';
+import { alerts } from './alerts';
 
-export default combineReducers({ posts, Auth })
+export default combineReducers({ tasks, Auth,alerts })

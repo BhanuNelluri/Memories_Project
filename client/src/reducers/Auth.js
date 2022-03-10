@@ -1,5 +1,6 @@
 import { AUTH, LOGOUT } from "../constants/ActionTypes";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (state = { authData: null }, action) => {
     switch (action.type) {
         case AUTH:

@@ -1,92 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { Grow, Grid, Container, Paper, AppBar, TextField, Button } from '@material-ui/core';
-import Posts from '../Posts/Posts';
-import Form from '../Form/Form';
-import { useDispatch } from 'react-redux';
-import { getPosts, getPostsBySearch } from '../../actions/posts';
-import Pagination from '../Pagination';
-import { useHistory, useLocation } from 'react-router-dom';
-import ChipInput from 'material-ui-chip-input';
+import React from 'react';
+import {Grow, Grid, Container, Paper, AppBar,Typography} from '@material-ui/core';
 import useStyles from './styles';
 
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
 
 const Home = () => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const [currentId, setCurrentId] = useState(null);
-    const query = useQuery();
-    const history = useHistory();
-    const page = query.get('page') || 1;
-    const searchQuery = query.get('searchQuery');
-    const [search, setSearch] = useState('');
-    const [tags, setTags] = useState([]);
+    const user = JSON.parse(localStorage.getItem('profile'));
+   
 
-
-
-    const searchPost = () => {
-        if (search.trim() || tags.length) {
-            dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
-            history.push(`/posts/search?searchQuery=${search || "none"}&tags=${tags.join(',')}`);
-        } else {
-            history.push('/');
-        }
-    }
-
-    const handleKeyPress = (e) => {
-        if (e.keycode === 13) {
-            searchPost();
-        }
-    }
-
-    const handleAdd = (tag) => {
-        setTags([...tags, tag]);
-    }
-    const handleDelete = (tagToDelete) => {
-        setTags(tags.filter((tag) => tag !== tagToDelete));
+    if (!user?.result?.name) {
+        return (
+            <Grid container justify="center" alignItems="stretch">
+            <Grid item xs={12} sm={6} style = {{marginTop:"30px"}} >
+            <Paper className={classes.paper}>
+                <Typography variant="h6" align="center" style = {{padding:"20px"}}>
+                    Please SignIn/SignUp to start with your tasks.
+                </Typography>
+            </Paper>
+            </Grid>
+            </Grid>
+        );
     }
 
     return (
-        <Grow in>
-            <Container maxWidth="xl">
-                <Grid container justify="space-between" alignItems="stretch" className={classes.gridContainer} spacing={3}>
-                    <Grid item xs={12} sm={6} md={9}>
-                        <Posts setCurrentId={setCurrentId} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <AppBar className={classes.appBarSearch} position="static" color="inherit">
-                            <TextField
-                                name="search"
-                                variant="outlined"
-                                label="Search Memories"
-                                fullWidth
-                                value={search}
-                                onKeyPress={handleKeyPress}
-                                onChange={(e) => setSearch(e.target.value)}
-                            />
-                            <ChipInput
-                                style={{ margin: '10px 0' }}
-                                value={tags}
-                                onAdd={handleAdd}
-                                onDelete={handleDelete}
-                                label="Search Tags"
-                                variant="outlined"
-                            />
-                            <Button onClick={searchPost} variant="contained" className={classes.searchButton} color="primary">Search</Button>
+            <Grow in>
+            <Container>
+                <Grid container justify="center"  alignItems="stretch" className={classes.gridContainer}>
+                    <Grid item xs={12} sm={6}>
+                        <AppBar className={classes.appBarSearch} position="static" color="inherit"  style={{ align: "center" }}>
+                        <a style={{ textDecoration: 'none',fontWeight:'600' }} href="/myday">My Day</a>
                         </AppBar>
-                        <Form currentId={currentId} setCurrentId={setCurrentId} />
-                        {(!searchQuery && !tags.length) && (
-                            <Paper elevation={6} className={classes.pagination}>
-                                <Pagination page={page} />
-                            </Paper>
-                        )}
-
+                        <AppBar className={classes.appBarSearch} position="static" color="inherit"  style={{ align: "center" }}>
+                        <a href="/important" style={{ textDecoration: 'none',fontWeight:'600' }}>Important Tasks </a>
+                        </AppBar>
+                        <AppBar className={classes.appBarSearch} position="static" color="inherit"  style={{ align: "center" }}>
+                           <a href="/tasks" style={{ textDecoration: 'none',fontWeight:'600' }}>Tasks</a>
+                        </AppBar>
                     </Grid>
                 </Grid>
-            </Container>
+                 </Container>
+            
         </Grow>
+       
     );
 }
 

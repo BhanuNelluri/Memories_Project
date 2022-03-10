@@ -4,7 +4,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import postRoutes from './routes/posts.js';
+import postRoutes from './routes/tasks.js';
 import userRoutes from './routes/users.js';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
@@ -17,9 +17,8 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 
-// app.use(express.static(path.join(__dirname, '/public')));
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 const dbURL = process.env.DB_URL;
@@ -38,10 +37,10 @@ db.once('open', function () {
 });
 
 app.get('/', (req, res) => {
-    res.send("Welcome to memories app!")
+    res.send("Welcome to ToDo app!")
 })
 
-app.use('/posts', postRoutes);
+app.use('/', postRoutes);
 app.use('/users', userRoutes);
 
 

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { AppBar, Typography, Toolbar, Button, Avatar } from '@material-ui/core';
 import useStyles from './styles'
-import memoriesLogo from '../../images/logo.png';
-import memoriesText from '../../images/text.png';
+import Logo from '../../images/text.png';
 import { useDispatch } from 'react-redux';
 import { LOGOUT } from '../../constants/ActionTypes';
 import decode from 'jwt-decode';
+import { Grid } from '@mui/material';
 
 
 const Navbar = () => {
@@ -19,8 +19,9 @@ const Navbar = () => {
 
     const userlogout = () => {
         dispatch({ type: LOGOUT })
-        history.push('/');
         setUser(null);
+        history.push('/');
+        window.location.reload();
     }
     console.log(user);
 
@@ -39,16 +40,20 @@ const Navbar = () => {
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
             <Link to="/" className={classes.brandContainer}>
-                <img src={memoriesText} alt="icon" height="45px" />
-                <img className={classes.image} height="40px" src={memoriesLogo} alt="memories" height="60" />
+                <img src={Logo} alt="icon" height="60px" />
             </Link>
             <Toolbar className={classes.toolbar}>
                 {user ? (
-                    <div className={classes.toolbar}>
-                        <Avatar className={classes.purple} alt={user.result.name} src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>
-                        <Typography className={classes.userName} variant="h6">{user.result.name}</Typography>
+                    <Grid className={classes.toolbar}>
+                        <Grid container>
+                        <Avatar style={{marginRight:"10px"}} item className={classes.purple} alt={user.result.name} src={user.result.imageUrl}>{user.result.name.charAt(0)}</Avatar>
+                        <Typography style={{marginRight:"10px"}} item className={classes.userName} variant="h6">{user.result.name}</Typography>
+                        </Grid>
+                        <div >
                         <Button variant="contained" className={classes.logout} color="secondary" onClick={userlogout} >LogOut</Button>
-                    </div>
+                        </div>
+                        
+                    </Grid>
                 ) : (
                     <Button component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
                 )}
